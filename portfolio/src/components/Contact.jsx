@@ -10,9 +10,7 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
 
-  const API =
-    import.meta.env.VITE_API_URL ||
-    "http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setForm({
@@ -28,24 +26,18 @@ export default function Contact() {
     setStatus("");
 
     try {
-      const res = await fetch(
-        `${API}/api/contact`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await fetch(`${API}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
       const data = await res.json();
 
       if (res.ok && data.success) {
-        setStatus(
-          "✅ Message sent successfully!"
-        );
+        setStatus("✅ Message sent successfully!");
 
         setForm({
           name: "",
@@ -53,21 +45,12 @@ export default function Contact() {
           message: "",
         });
       } else {
-        setStatus(
-          "❌ " +
-            (data.message ||
-              "Failed to send message.")
-        );
+        setStatus("❌ " + (data.message || "Failed to send message."));
       }
     } catch (error) {
-      console.error(
-        "CONTACT ERROR:",
-        error
-      );
+      console.error("CONTACT ERROR:", error);
 
-      setStatus(
-        "❌ Cannot connect to server."
-      );
+      setStatus("❌ Cannot connect to server.");
     }
 
     setLoading(false);
@@ -121,16 +104,10 @@ export default function Contact() {
           disabled={loading}
           className="w-full bg-black text-white py-3 rounded-xl hover:opacity-90 transition disabled:opacity-60"
         >
-          {loading
-            ? "Sending..."
-            : "Send Message"}
+          {loading ? "Sending..." : "Send Message"}
         </button>
 
-        {status && (
-          <p className="text-center text-sm mt-2">
-            {status}
-          </p>
-        )}
+        {status && <p className="text-center text-sm mt-2">{status}</p>}
       </form>
     </section>
   );
