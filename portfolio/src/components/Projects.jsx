@@ -6,8 +6,8 @@ export default function Projects() {
       title: "Portfolio Website",
       desc: "Full-stack portfolio with backend API, dark mode, animations, and contact form.",
       tech: ["React", "Express", "Tailwind"],
-      github: "https://github.com/yourusername/portfolio",
-      live: "https://yourportfolio.vercel.app",
+      github: "https://github.com/e4ekhlaque/portfolio",
+      live: "https://portfolio-lemon-three-88.vercel.app/",
     },
     {
       title: "ToDo App",
@@ -16,13 +16,7 @@ export default function Projects() {
       github: "https://github.com/yourusername/todo-app",
       live: "https://todo-app.vercel.app",
     },
-    {
-      title: "E-Commerce UI",
-      desc: "Modern e-commerce frontend with product cards and cart layout.",
-      tech: ["React", "Tailwind"],
-      github: "https://github.com/yourusername/ecommerce-ui",
-      live: "https://ecommerce-ui.vercel.app",
-    },
+    ,
   ];
 
   return (
@@ -30,9 +24,7 @@ export default function Projects() {
       id="projects"
       className="p-12 bg-gray-50 dark:bg-gray-900 text-center"
     >
-      <h2 className="text-3xl font-semibold mb-10">
-        Projects
-      </h2>
+      <h2 className="text-3xl font-semibold mb-10">Projects</h2>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projectList.map((project, index) => (
@@ -42,9 +34,7 @@ export default function Projects() {
             transition={{ duration: 0.3 }}
             className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition text-left"
           >
-            <h3 className="text-xl font-bold mb-3">
-              {project.title}
-            </h3>
+            <h3 className="text-xl font-bold mb-3">{project.title}</h3>
 
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               {project.desc}
