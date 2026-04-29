@@ -4,19 +4,18 @@ export default function Projects() {
   const projectList = [
     {
       title: "Portfolio Website",
-      desc: "Full-stack portfolio with backend API, dark mode, animations, and contact form.",
+      desc: "Built a responsive full-stack portfolio website with backend API integration, dark mode, smooth animations, and a functional contact form.",
       tech: ["React", "Express", "Tailwind"],
       github: "https://github.com/e4ekhlaque/portfolio",
       live: "https://portfolio-lemon-three-88.vercel.app/",
     },
     {
       title: "ToDo App",
-      desc: "Task management app with CRUD operations and responsive UI.",
-      tech: ["React", "Node.js", "MongoDB"],
-      github: "https://github.com/yourusername/todo-app",
-      live: "https://todo-app.vercel.app",
+      desc: "Built a production-ready MERN To-Do application with secure authentication, task management, email-based password reset, and a fully responsive modern UI.",
+      tech: ["React", "Node.js", "Express.js", "MongoDB"],
+      github: "https://github.com/e4ekhlaque/to-do-app",
+      live: "https://to-do-app-tau-three-89.vercel.app",
     },
-    ,
   ];
 
   return (
