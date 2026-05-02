@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Contact() {
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
+    botcheck: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
 
-  const API = import.meta.env.VITE_API_URL;
+  // ✅ FIX: useEffect inside component
+  useEffect(() => {
+    if (status === "success") {
+      const timer = setTimeout(() => {
+        setStatus("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
 
   const handleChange = (e) => {
     setForm({
@@ -22,35 +32,42 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (form.botcheck) return;
+
     setLoading(true);
     setStatus("");
 
     try {
-      const res = await fetch(`${API}/api/contact`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          access_key: "275d5609-bb1e-4adf-8ce5-27982cb52a1c",
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          subject: "New Portfolio Message",
+          from_name: form.name,
+        }),
       });
 
       const data = await res.json();
 
-      if (res.ok && data.success) {
-        setStatus("✅ Message sent successfully!");
-
+      if (data.success) {
+        setStatus("success");
         setForm({
           name: "",
           email: "",
           message: "",
+          botcheck: "",
         });
       } else {
-        setStatus("❌ " + (data.message || "Failed to send message."));
+        setStatus("error");
       }
-    } catch (error) {
-      console.error("CONTACT ERROR:", error);
-
-      setStatus("❌ Cannot connect to server.");
+    } catch {
+      setStatus("error");
     }
 
     setLoading(false);
@@ -69,6 +86,15 @@ export default function Contact() {
         onSubmit={handleSubmit}
         className="max-w-2xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-2xl shadow space-y-4"
       >
+        {/* Honeypot */}
+        <input
+          type="text"
+          name="botcheck"
+          value={form.botcheck}
+          onChange={handleChange}
+          className="hidden"
+        />
+
         <input
           type="text"
           name="name"
@@ -107,7 +133,18 @@ export default function Contact() {
           {loading ? "Sending..." : "Send Message"}
         </button>
 
-        {status && <p className="text-center text-sm mt-2">{status}</p>}
+        {/* Status */}
+        {status === "success" && (
+          <p className="text-green-600 text-center text-sm">
+            ✅ Message sent successfully!
+          </p>
+        )}
+
+        {status === "error" && (
+          <p className="text-red-500 text-center text-sm">
+            ❌ Failed to send message.
+          </p>
+        )}
       </form>
     </section>
   );
